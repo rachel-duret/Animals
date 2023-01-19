@@ -1,7 +1,9 @@
 package com.Alphanetworks.Animals.service;
 
 import com.Alphanetworks.Animals.models.Animal;
+import com.Alphanetworks.Animals.models.User;
 import com.Alphanetworks.Animals.repository.AnimalRepository;
+import com.Alphanetworks.Animals.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,13 @@ import java.util.Optional;
 public class AnimalService implements AnimalServiceInterface {
 
     private AnimalRepository animalRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AnimalService(AnimalRepository animalRepository) {
+    public AnimalService(AnimalRepository animalRepository,
+                         UserRepository userRepository) {
         this.animalRepository = animalRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -31,6 +36,8 @@ public class AnimalService implements AnimalServiceInterface {
 
     @Override
     public Animal addOneAnimal(Animal animal) {
+        User user = userRepository.findByFirstname("rachel");
+        animal.setUser(user);
         return animalRepository.save(animal);
     }
 
