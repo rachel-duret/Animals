@@ -30,8 +30,10 @@ public class AnimalService implements AnimalServiceInterface {
     }
 
     @Override
-    public Optional<Animal> findOneAnimal(int id) {
-        return animalRepository.findById(id);
+    public Animal findOneAnimal(int id) {
+        return animalRepository.findOneAnimalById(id);
+
+
     }
 
     @Override

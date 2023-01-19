@@ -6,12 +6,10 @@ import com.Alphanetworks.Animals.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AnimalController {
@@ -36,7 +34,7 @@ public class AnimalController {
         Animal animal = new Animal();
         model.addAttribute("animal", animal);
         model.addAttribute("animalTypes", AnimalType.values());
-        return "animal_create";
+        return "animal-create";
     }
 
     @PostMapping("/animals/add")
@@ -44,4 +42,25 @@ public class AnimalController {
         animalService.addOneAnimal(animal);
         return "animals";
     }
+
+    @GetMapping("/animals/{id}/update")
+    public String updateAnimalForm(@PathVariable int id, Model model){
+        Animal animal = animalService.findOneAnimal(id);
+        model.addAttribute("animal", animal);
+        model.addAttribute("animalTypes", AnimalType.values());
+        return "animal-update";
+    }
+
+    @PostMapping("/animals/{id}/update")
+    public String updateOneAnimal(@PathVariable int id, @ModelAttribute("animal") Animal newAnimal){
+        Animal animal=animalService.findOneAnimal(id);
+        System.out.println(animal.getUser().getFirstname());
+        animal.setName(newAnimal.getName());
+        animal.setType(newAnimal.getType());
+        animalService.updateOneAnimal(animal);
+        return "redirect:/animals";
+    }
+
+
+
 }
