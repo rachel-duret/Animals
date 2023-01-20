@@ -25,6 +25,7 @@ public class AnimalController {
         this.animalService = animalService;
     }
 
+//    Get animals list
     @GetMapping("/animals")
     public String findAllAnimals(Model model){
         Animal animal = new Animal();
@@ -33,6 +34,7 @@ public class AnimalController {
         return "animals";
     }
 
+//    Get details of one animal
     @GetMapping("/animals/{id}")
     public String findOneAnimal(@PathVariable int id, Model model){
         Animal animal = animalService.findOneAnimal(id);
@@ -40,6 +42,7 @@ public class AnimalController {
         return "animal";
     }
 
+//    Show add one new animal form
     @GetMapping("/animals/add")
     public String renderAnimalForm(Model model){
         Animal animal = new Animal();
@@ -47,7 +50,7 @@ public class AnimalController {
         model.addAttribute("animalTypes", AnimalType.values());
         return "animal-create";
     }
-
+//  Add one new animal
     @PostMapping("/animals/add")
     public String addOneAnimal(@Valid @ModelAttribute("animal") Animal animal,
                                BindingResult bindingResult){
@@ -58,6 +61,7 @@ public class AnimalController {
         return "redirect:/animals";
     }
 
+//    Show update one animal form
     @GetMapping("/animals/{id}/update")
     public String updateAnimalForm(@PathVariable int id, Model model){
         Animal animal = animalService.findOneAnimal(id);
@@ -66,6 +70,7 @@ public class AnimalController {
         return "animal-update";
     }
 
+//    Update one animal
     @PostMapping("/animals/{id}/update")
     public String updateOneAnimal(@PathVariable int id,
                                   @ModelAttribute("animal") Animal newAnimal){
@@ -77,6 +82,7 @@ public class AnimalController {
         return "redirect:/animals";
     }
 
+//    Delete one animal
     @GetMapping("/animals/{id}/delete")
     public String deleteOneAnimal(@PathVariable int id){
         animalService.deleteOneUser(id);

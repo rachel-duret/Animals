@@ -22,7 +22,7 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/register")
+    @GetMapping("/auth/register")
     public String renderRegisterForm(Model model){
         User user = new User();
         model.addAttribute("user", user);
@@ -30,7 +30,7 @@ public class AuthController {
 
     }
 
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public String renderLoginForm(Model model){
 
         User user = new User();
@@ -39,12 +39,12 @@ public class AuthController {
 
     }
 
-    @PostMapping("/register/save")
+    @PostMapping("/auth/register/save")
     public String register(@Valid @ModelAttribute("user")User user, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return "register";
         }
         userService.addOneUser(user);
-        return "redirect:/login";
+        return "redirect:/auth/login";
     }
 }
