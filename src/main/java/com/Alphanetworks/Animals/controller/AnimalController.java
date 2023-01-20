@@ -29,6 +29,13 @@ public class AnimalController {
         return "animals";
     }
 
+    @GetMapping("/animals/{id}")
+    public String findOneAnimal(@PathVariable int id, Model model){
+        Animal animal = animalService.findOneAnimal(id);
+        model.addAttribute("animal", animal);
+        return "animal";
+    }
+
     @GetMapping("/animals/add")
     public String renderAnimalForm(Model model){
         Animal animal = new Animal();
@@ -40,7 +47,7 @@ public class AnimalController {
     @PostMapping("/animals/add")
     public String addOneAnimal(@ModelAttribute("animal") Animal animal){
         animalService.addOneAnimal(animal);
-        return "animals";
+        return "redirect:/animals";
     }
 
     @GetMapping("/animals/{id}/update")
@@ -61,6 +68,11 @@ public class AnimalController {
         return "redirect:/animals";
     }
 
+    @GetMapping("/animals/{id}/delete")
+    public String deleteOneAnimal(@PathVariable int id){
+        animalService.deleteOneUser(id);
+        return "redirect:/animals";
+    }
 
 
 }

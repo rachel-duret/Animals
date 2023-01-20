@@ -34,13 +34,15 @@
         <div class="col d-flex  justify-content-center m-auto ">
 
             <div class="card" style="width: 18rem;"  th:each="animal: ${animals}">
+                <a th:href="@{ /animals/{id}(id=${animal.id}) }">
                 <div class="card-body" >
                     <h5 class="card-title" th:text="${animal.name}"></h5>
                     <h6 class="card-subtitle mb-2 text-muted" th:text="${animal.user}"></h6>
-
-                    <a th:href="@{/animals/{id}/update(id=${animal.id})}" href="#" class="card-link">Update</a>
-                    <a href="#" class="card-link">Delete</a>
+                    <a th:href="@{ /animals/{id}( id=${animal.id} ) }" class="card-link">Read</a>
+                    <a th:href="@{/animals/{id}/update(id=${animal.id})}" class="card-link">Update</a>
+                    <a th:href="@{/animals/{id}/delete(id=${animal.id})}" class="card-link">Delete</a>
                 </div>
+                </a>
             </div>
         </div>
 
