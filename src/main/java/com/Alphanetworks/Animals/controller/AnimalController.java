@@ -3,9 +3,12 @@ package com.Alphanetworks.Animals.controller;
 import com.Alphanetworks.Animals.models.Animal;
 import com.Alphanetworks.Animals.models.AnimalType;
 import com.Alphanetworks.Animals.service.AnimalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.Optional;
 public class AnimalController {
 
     private AnimalService animalService;
+    private BindingResult bindingResult;
 
     @Autowired
     public AnimalController(AnimalService animalService) {
@@ -45,7 +49,11 @@ public class AnimalController {
     }
 
     @PostMapping("/animals/add")
-    public String addOneAnimal(@ModelAttribute("animal") Animal animal){
+    public String addOneAnimal(@Valid @ModelAttribute("animal") Animal animal,
+                               BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "animal-create";
+        }
         animalService.addOneAnimal(animal);
         return "redirect:/animals";
     }
@@ -59,9 +67,10 @@ public class AnimalController {
     }
 
     @PostMapping("/animals/{id}/update")
-    public String updateOneAnimal(@PathVariable int id, @ModelAttribute("animal") Animal newAnimal){
+    public String updateOneAnimal(@PathVariable int id,
+                                  @ModelAttribute("animal") Animal newAnimal){
+
         Animal animal=animalService.findOneAnimal(id);
-        System.out.println(animal.getUser().getFirstname());
         animal.setName(newAnimal.getName());
         animal.setType(newAnimal.getType());
         animalService.updateOneAnimal(animal);

@@ -2,20 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+    <title>Register</title>
 </head>
 <body>
-    <header>this is for header</header>
+    <header class="m-1 ">
+    <nav class="navbar navbar-expand-lg bg-dark bg-gradient bg-opacity-25 p-5 ">
+        <div class="container-fluid d-flex justify-content-between">
+            <a class="navbar-brand" href="#">My Pets</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/animals/add}">Add one Animal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/animals}">Animals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/register}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
     <main>
-        <form role="form"  method="post" th:action="@{/register/save}" th:object="${user}">
-            <label for="firstname"> Firstname</label>
-            <input type="text" id="firstname" name="firstname" th:field="*{firstname}" >
+        <div class="container">
+            <div class="row">
+                <div class="col col-sm-8 ">
+                    <form role="form"  method="post" th:action="@{/register/save}" th:object="${user}">
+                        <div class="mb-3">
+                            <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="text-danger" ></p>
+                            <label for="firstname" class="form-label"> Firstname</label>
+                            <input type="text" id="firstname" class="form-control" name="firstname" th:field="*{firstname}" >
+                        </div>
 
-            <label for="lastname"> Lastname</label>
-            <input type="text" id="lastname" name="lastname" th:field="*{lastname}" >
+                        <div class="mb-3">
+                            <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="text-danger" ></p>
+                            <label for="lastname" class="form-lable"> Lastname</label>
+                            <input type="text" id="lastname" class="form-control" name="lastname" th:field="*{lastname}" >
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-            <button type="submit">Submit</button>
-        </form>
     </main>
 
 </body>

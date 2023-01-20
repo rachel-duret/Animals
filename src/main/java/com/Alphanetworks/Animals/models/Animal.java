@@ -1,6 +1,7 @@
 package com.Alphanetworks.Animals.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,8 +10,14 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false,updatable = false)
     private int id;
+
+    @NotEmpty(message = "Name is required.")
+    @Column( unique = true)
     private String name;
+
+    @Column(nullable = false)
     private AnimalType type;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
