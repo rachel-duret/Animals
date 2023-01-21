@@ -41,7 +41,7 @@
         <div class="container">
             <div class="row">
                 <div class="col col-sm-8 ">
-                    <form role="form"  method="post" th:action="@{/register/save}" th:object="${user}">
+                    <form role="form"  method="post" th:action="@{/auth/register}" th:object="${user}">
                         <div class="mb-3">
                             <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="text-danger" ></p>
                             <label for="firstname" class="form-label"> Firstname</label>
@@ -52,6 +52,12 @@
                             <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="text-danger" ></p>
                             <label for="lastname" class="form-lable"> Lastname</label>
                             <input type="text" id="lastname" class="form-control" name="lastname" th:field="*{lastname}" >
+                        </div>
+
+                        <div class="mb-3">
+                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger" ></p>
+                            <label for="password" class="form-lable"> Password</label>
+                            <input type="text" id="password" class="form-control" name="password" th:field="*{password}" >
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

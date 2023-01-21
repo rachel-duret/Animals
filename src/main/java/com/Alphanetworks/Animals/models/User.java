@@ -21,14 +21,19 @@ public class User {
     @NotBlank(message = "Firstname is required.")
     @Column(nullable = false)
     private String lastname;
+    @NotBlank(message = "Password is required.")
+    @Column(nullable = false)
+    private String password;
+
 
     public User() {
     }
 
-    public User(int id, String firstname, String lastname) {
+    public User(int id, String firstname, String lastname, String password) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.password = password;
     }
 
     public int getId() {
@@ -53,5 +58,13 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
