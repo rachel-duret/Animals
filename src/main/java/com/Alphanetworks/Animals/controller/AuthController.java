@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AuthController {
 
     private UserService userService;
-    private AuthenticationManager authenticationManager;
+
     private PasswordEncoder passwordEncoder;
     @Autowired
-    public AuthController(UserService userService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
+
     }
 
 // Show register form
-    @GetMapping("/auth/register")
+    @GetMapping("/register")
     public String renderRegisterForm(Model model){
         User user = new User();
         model.addAttribute("user", user);
@@ -39,17 +39,14 @@ public class AuthController {
 
     }
 //Show login form
-    @GetMapping("/auth/login")
-    public String renderLoginForm(Model model){
-
-        User user = new User();
-        model.addAttribute("user", user);
+    @GetMapping("/login")
+    public String renderLoginForm(){
         return "login";
-
     }
 // Add one new user
-    @PostMapping("/auth/register")
-    public String register(@Valid @ModelAttribute("user")User user, BindingResult bindingResult){
+    @PostMapping("/register")
+    public String register(@Valid @ModelAttribute("user")User user,  BindingResult bindingResult){
+
         if (bindingResult.hasErrors()){
             return "register";
         }
@@ -58,24 +55,8 @@ public class AuthController {
         encodeUser.setFirstname(user.getFirstname());
         encodeUser.setLastname(user.getLastname());
         userService.addOneUser(encodeUser);
-        return "redirect:/auth/login";
+        return "redirect:/login";
     }
 
-//    Check Login user
-    @PostMapping("/auth/login")
-    public  String login(@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            System.out.println(bindingResult.hasErrors());
-            return "login";
 
-        }
-        System.out.println(user.getPassword());
-        UsernamePasswordAuthenticationToken usernamePasswordAuthentication =
-                new UsernamePasswordAuthenticationToken(user.getFirstname(), user.getPassword());
-
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthentication);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println(authentication.isAuthenticated());
-        return  "redirect:/animals";
-    }
 }

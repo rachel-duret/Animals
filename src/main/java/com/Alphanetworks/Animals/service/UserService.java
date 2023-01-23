@@ -17,6 +17,8 @@ public class UserService implements UserServiceInterface{
 
     @Override
     public User addOneUser(User user) {
+        System.out.println(user.getPassword());
+        System.out.println(user.getFirstname());
         userRepository.save(user);
         return null;
     }
@@ -25,5 +27,9 @@ public class UserService implements UserServiceInterface{
     public User findByFirstname(String firstname) {
         return  userRepository.findByFirstname(firstname);
 
+    }
+
+    public boolean existsByFirstname(String firstname){
+        return userRepository.existsByFirstname(firstname);
     }
 }

@@ -26,10 +26,10 @@
                         <a class="nav-link" th:href="@{/animals}">Animals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/auth/register}">Register</a>
+                        <a class="nav-link" th:href="@{/register}">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/auth/login}">Login</a>
+                        <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
                 </ul>
 
@@ -40,8 +40,9 @@
     <main>
         <div class="container">
             <div class="row">
+                <div th:if="${param.fail}" class="alert alert-danger" > Firstname already exists.</div>
                 <div class="col col-sm-8 ">
-                    <form role="form"  method="post" th:action="@{/auth/register}" th:object="${user}">
+                    <form role="form"  method="post" th:action="@{/register}" th:object="${user}">
                         <div class="mb-3">
                             <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="text-danger" ></p>
                             <label for="firstname" class="form-label"> Firstname</label>

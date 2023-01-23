@@ -4,7 +4,9 @@ import com.Alphanetworks.Animals.models.Animal;
 import com.Alphanetworks.Animals.models.User;
 import com.Alphanetworks.Animals.repository.AnimalRepository;
 import com.Alphanetworks.Animals.repository.UserRepository;
+import com.Alphanetworks.Animals.security.config.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,13 +40,18 @@ public class AnimalService implements AnimalServiceInterface {
 
     @Override
     public Animal addOneAnimal(Animal animal) {
-        User user = userRepository.findByFirstname("rachel");
+
+        User user = userRepository.findByFirstname(SecurityUtil.getloggedUsername());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
         animal.setUser(user);
         return animalRepository.save(animal);
     }
 
     @Override
     public Animal updateOneAnimal(Animal animal) {
+        User user = userRepository.findByFirstname(SecurityUtil.getloggedUsername());
         return animalRepository.save(animal);
     }
 

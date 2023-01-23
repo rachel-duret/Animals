@@ -26,10 +26,10 @@
                         <a class="nav-link" th:href="@{/animals}">Animals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/auth/register}">Register</a>
+                        <a class="nav-link" th:href="@{/register}">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/auth/login}">Login</a>
+                        <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
                 </ul>
 
@@ -40,25 +40,31 @@
     <div class="container">
         <div class="row">
             <div class="col col-sm-8 ">
-                <form th:action="@{/auth/login}" method="post" role="form" th:object="${user}">
+                <div th:if="${param.error}" class="alert alert-danger">
+                    Invalid username and password.
+                </div>
+                <form th:action="@{/login}" method="post" >
                     <div class="mb-3">
-                        <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="text-danger" ></p>
-                        <label for="firstname" class="form-label"> Firstname</label>
-                        <input type="text" id="firstname" name="firstname" class="form-control" th:field="*{firstname}">
+                        <label>Username</label>
+                        <input
+                                id="username"
+                                type="text"
+                                class="form-control"
+                                placeholder="Username"
+                                name="username">
                     </div>
 
                     <div class="mb-3">
-                        <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="text-danger" ></p>
-                        <label for="lastname" class="form-label"> Lastname</label>
-                        <input type="text" id="lastname" name="lastname" class="form-control" th:field="*{lastname}">
+                        <label>Password</label>
+                        <input
+                                id="password"
+                                type="password"
+                                class="form-control"
+                                placeholder="Password"
+                                name="password">
                     </div>
-
-                    <div class="mb-3">
-                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger" ></p>
-                        <label for="password" class="form-label"> Password</label>
-                        <input type="text" id="password" name="password" class="form-control" th:field="*{password}">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button th:href="@{/register}" type="submit" class="btn btn-black">Don't have an account? Register here.</button>
+                    <button type="submit" value="Log in" class="btn btn-secondary">Login</button>
                 </form>
             </div>
         </div>
