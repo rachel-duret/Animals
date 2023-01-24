@@ -20,14 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class AuthController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private PasswordEncoder passwordEncoder;
     @Autowired
-    public AuthController(UserService userService, PasswordEncoder passwordEncoder) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-
     }
 
 // Show register form
@@ -45,16 +42,12 @@ public class AuthController {
     }
 // Add one new user
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("user")User user,  BindingResult bindingResult){
+    public String register(@Valid @ModelAttribute("user")User user, Model model, BindingResult bindingResult){
 
         if (bindingResult.hasErrors()){
             return "register";
         }
-        User encodeUser = new User();
-        encodeUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        encodeUser.setFirstname(user.getFirstname());
-        encodeUser.setLastname(user.getLastname());
-        userService.addOneUser(encodeUser);
+        userService.addOneUser(user);
         return "redirect:/login";
     }
 

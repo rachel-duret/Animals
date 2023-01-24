@@ -16,7 +16,7 @@ import java.util.Collections;
 @Service
 public class UserSecurityService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserSecurityService(UserRepository userRepository) {
@@ -27,7 +27,6 @@ public class UserSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(String firstname) throws UsernameNotFoundException {
         User appUser = userRepository.findByFirstname(firstname);
         System.out.println(firstname);
-
         if (appUser !=null){
             return new org.springframework.security.core.userdetails.User(appUser.getFirstname(), appUser.getPassword(), Collections.singleton(new SimpleGrantedAuthority("USER")));
         } else {

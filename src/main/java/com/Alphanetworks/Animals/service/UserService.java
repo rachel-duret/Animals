@@ -1,26 +1,36 @@
 package com.Alphanetworks.Animals.service;
 
+import com.Alphanetworks.Animals.exceptions.BadRequestException;
 import com.Alphanetworks.Animals.models.User;
 import com.Alphanetworks.Animals.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements UserServiceInterface{
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User addOneUser(User user) {
-        System.out.println(user.getPassword());
-        System.out.println(user.getFirstname());
-        userRepository.save(user);
-        return null;
+        boolean existUser = userRepository.existsByFirstname(user.getFirstname());
+        if (existUser){
+            throw new BadRequestException("User already exist");
+        }
+        User encodeUser = new User();
+        encodeUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        encodeUser.setFirstname(user.getFirstname());
+        encodeUser.setLastname(user.getLastname());
+        return  userRepository.save(encodeUser);
+
     }
 
     @Override

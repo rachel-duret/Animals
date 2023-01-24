@@ -8,16 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class AnimalController {
 
-    private AnimalService animalService;
+    private final AnimalService animalService;
     private BindingResult bindingResult;
 
     @Autowired
@@ -25,10 +23,9 @@ public class AnimalController {
         this.animalService = animalService;
     }
 
-//    Get animals list
+//    Get animals list of user
     @GetMapping("/animals")
     public String findAllAnimals(Model model){
-        Animal animal = new Animal();
         List<Animal> animals = animalService.findAllAnimal();
         model.addAttribute("animals", animals);
         return "animals";
@@ -74,18 +71,14 @@ public class AnimalController {
     @PostMapping("/animals/{id}/update")
     public String updateOneAnimal(@PathVariable int id,
                                   @ModelAttribute("animal") Animal newAnimal){
-
-        Animal animal=animalService.findOneAnimal(id);
-        animal.setName(newAnimal.getName());
-        animal.setType(newAnimal.getType());
-        animalService.updateOneAnimal(animal);
+        animalService.updateOneAnimal(newAnimal, id);
         return "redirect:/animals";
     }
 
 //    Delete one animal
     @GetMapping("/animals/{id}/delete")
     public String deleteOneAnimal(@PathVariable int id){
-        animalService.deleteOneUser(id);
+        animalService.deleteOneAnimal(id);
         return "redirect:/animals";
     }
 
