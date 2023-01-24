@@ -3,7 +3,6 @@ package com.Alphanetworks.Animals.security.config;
 import com.Alphanetworks.Animals.models.User;
 import com.Alphanetworks.Animals.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
