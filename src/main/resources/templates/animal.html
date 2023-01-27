@@ -45,20 +45,18 @@
       <div class="card" style="width: 28rem; height:28rem;" th:object="${animal}">
 
           <div class="card-body"  >
-            <h5 class="card-title" th:text="${animal.name}"></h5>
-            <h6 th:text="${animal.type.name}"></h6>
-            <h6 class="card-subtitle mb-2 text-muted" th:text="${animal.user.firstname}"></h6>
-
-            <a th:href="@{/animals/{id}/update(id=${animal.id})}" class="card-link">Update</a>
-            <a th:href="@{/animals/{id}/delete(id=${animal.id})}" class="card-link">Delete</a>
-
+            <h5 class="card-title text-capitalize" th:text="${animal.name}"></h5>
+            <h6 class="d-flex text-capitalize">Type -
+              <p  th:text="${animal.type.name}"></p>
+            </h6>
+            <h6 class="card-subtitle mb-2 d-flex text-muted text-capitalize" > Created by -
+              <p th:text="${animal.user.firstname}"></p>
+            </h6>
+            <a th:href="@{/animals/{id}/update(id=${animal.id})}" class="card-link text-decoration-none">Update</a>
+            <a th:href="@{/animals/{id}/delete(id=${animal.id})}" class="card-link text-decoration-none">Delete</a>
           </div>
-
-
       </div>
     </div>
-
-
   </div>
 </div>
 
