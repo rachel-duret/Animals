@@ -33,6 +33,7 @@ public class AnimalController {
 
 //    Get details of one animal
     @GetMapping("/animals/{id}")
+    @ResponseBody
     public String findOneAnimal(@PathVariable int id, Model model){
         Animal animal = animalService.findOneAnimal(id);
         model.addAttribute("animal", animal);
